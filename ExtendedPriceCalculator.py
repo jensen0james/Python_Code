@@ -1,0 +1,7 @@
+item = input("Enter an item description: ")
+unit_price = input("Enter the unit price: ")
+quantity = input("Enter the quantity: ")
+print(item + ":")
+print("\tUnit Price:\t" + "$" + format(float(unit_price), "8.2f"))
+print("\tQuantity:\t" + format(int(quantity), "9"))
+print("\tExtended Price:\t" + "$" + format(float(unit_price) * int(quantity), "8.3f"))
