@@ -1,0 +1,30 @@
+import statistics
+def openFile(filename):
+    file = open(filename, 'r')
+    contents = file.read()
+    valueList = contents.split("\n")
+    valueList.remove('')
+    for i in range (len(valueList)):
+        valueList[i] = float(valueList[i])
+    return valueList
+def writeToFile(valueList):
+    file = open("output.data", 'w')
+    file.write(f"""Data Analysis
+=============
+Sum:\t{sum(valueList):20.10f}
+Min:\t{min(valueList):20.10f}
+Max:\t{max(valueList):20.10f}
+Average:{statistics.mean(valueList):20.10f}
+""")
+    print("Done writing.")
+filename = input("Input the filename: ")
+if filename != "":
+    try:
+        writeToFile(openFile(filename))
+    except FileNotFoundError:
+        print("That file name could not be found.")
+    except IsADirectoryError:
+        print("There wasa directory error.")
+    except Exception as e:
+        print("The program threw an exception.")
+        print(e)
