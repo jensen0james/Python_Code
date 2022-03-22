@@ -1,0 +1,17 @@
+def converter(usd, code):
+    if code == "EUR":
+        conversion = usd * 0.88110
+    elif code == "GBP":
+        conversion = usd * 0.73723
+    elif code == "CAD":
+        conversion = usd * 1.2734
+    elif code == "RUP":
+        conversion = usd * 75.362
+    else:
+        conversion = 0
+    return conversion
+def display(usd, code, conversion):
+    print("USD: " + str(usd) + "\n" + code + ": " + str(conversion))
+code = input("Would you like to convert USD to EUR, GBP, CAD, or RUP? ")
+usd = float(input("How much would you like to convert in USD? "))
+display(usd, code, converter(usd, code))
