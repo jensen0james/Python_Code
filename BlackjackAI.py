@@ -63,17 +63,18 @@ def dealerLogic(hand, evalHand):
         hit(hand, evalHand)
 
 def playerLogic(hand, evalHand):
-    while sum(evalHand) < 21:
+    flag = True
+    while flag:
         if sum(evalHand) >= 17:
-            break
+            flag = False
         elif sum(evalHand) >= 13 & evalDealerHand[0] < 7:
-            break
+            flag = False
         elif sum(evalHand) >= 13 & evalDealerHand[0] >= 7:
             hit(hand, evalHand)
         elif sum(evalHand) == 12 & evalDealerHand[0] < 4:
             hit(hand, evalHand)
         elif sum(evalHand) == 12 & evalDealerHand[0] < 7:
-            break
+            flag = False
         elif sum(evalHand) == 12:
             hit(hand, evalHand)
         else:
