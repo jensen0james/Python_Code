@@ -18,7 +18,7 @@ def shuffle():
     random.shuffle(deck)
 
 def deal(hand):
-    hand.append(hand[0])
+    hand.append(deck[0])
     deck.remove[0]
 
 def dealerStart():
@@ -42,15 +42,42 @@ def copy(hand, evalHand):
 
 
 def convert(evalHand):
-    #[s.strip("♥") for s in evalHand]
-    #[s.strip("♦") for s in evalHand]
-    #[s.strip("♣") for s in evalHand]
-    #[s.strip("♠") for s in evalHand]
+    [s.strip("♥") for s in evalHand]
+    [s.strip("♦") for s in evalHand]
+    [s.strip("♣") for s in evalHand]
+    [s.strip("♠") for s in evalHand]
     [s.replace('A', '11') for s in evalHand]
     [s.replace('J', '10') for s in evalHand]
     [s.replace('Q', '10') for s in evalHand]
     [s.replace('K', '10') for s in evalHand]
+    evalHand = list(map(int, evalHand))
     print(evalHand)
+
+def hit(hand, evalHand):
+    deal(hand)
+    copy(hand, evalHand)
+    convert(evalHand)
+
+def dealerLogic(hand, evalHand):
+    while sum(evalHand) < 15:
+        hit(hand, evalHand)
+
+def playerLogic(hand, evalHand):
+    while sum(evalHand) < 21:
+        if sum(evalHand) >= 17:
+            break
+        elif sum(evalHand) >= 13 & evalDealerHand[0] < 7:
+            break
+        elif sum(evalHand) >= 13 & evalDealerHand[0] >= 7:
+            hit(hand, evalHand)
+        elif sum(evalHand) == 12 & evalDealerHand[0] < 4:
+            hit(hand, evalHand)
+        elif sum(evalHand) == 12 & evalDealerHand[0] < 7:
+            break
+        elif sum(evalHand) == 12:
+            hit(hand, evalHand)
+        else:
+            hit(hand, evalHand)
 
 deck = []
 
@@ -79,3 +106,7 @@ print(playerHand)
 copy(playerHand, evalPlayerHand)
 
 convert(evalPlayerHand)
+
+playerLogic(playerHand, evalPlayerHand)
+
+dealerLogic(dealerHand, evalDealerHand)
