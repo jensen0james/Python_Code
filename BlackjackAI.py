@@ -107,6 +107,10 @@ copy(playerHand, evalPlayerHand)
 
 convert(evalPlayerHand)
 
+copy(dealerHand, evalDealerHand)
+
+convert(evalDealerHand)
+
 playerLogic(playerHand, evalPlayerHand)
 
 dealerLogic(dealerHand, evalDealerHand)
