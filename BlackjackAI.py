@@ -69,13 +69,13 @@ def playerLogic(hand, evalHand):
     while flag:
         if sum(evalHand) >= 17:
             flag = False
-        elif sum(evalHand) >= 13 & evalDealerHand[0] < 7:
+        elif sum(evalHand) >= 13 & evalDealerHand[1] < 7:
             flag = False
-        elif sum(evalHand) >= 13 & evalDealerHand[0] >= 7:
+        elif sum(evalHand) >= 13 & evalDealerHand[1] >= 7:
             evalHand = hit(hand)
-        elif sum(evalHand) == 12 & evalDealerHand[0] < 4:
+        elif sum(evalHand) == 12 & evalDealerHand[1] < 4:
             evalHand = hit(hand)
-        elif sum(evalHand) == 12 & evalDealerHand[0] < 7:
+        elif sum(evalHand) == 12 & evalDealerHand[1] < 7:
             flag = False
         elif sum(evalHand) == 12:
             evalHand = hit(hand)
@@ -100,8 +100,6 @@ shuffle()
 print(deck)
 
 begin()
-
-print(deck)
 
 print(dealerHand)
 
