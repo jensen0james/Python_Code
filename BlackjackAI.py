@@ -8,7 +8,7 @@ def createDeck():
 
 def deckCreator(symbol):
     deck.append("A" + symbol)
-    for i in range (2,10):
+    for i in range (2,11):
         deck.append(str(i) + symbol)
     deck.append("J" + symbol)
     deck.append("Q" + symbol)
@@ -19,7 +19,7 @@ def shuffle():
 
 def deal(hand):
     hand.append(deck[0])
-    deck.remove[0]
+    del deck[0]
 
 def dealerStart():
     dealerHand.append(deck[0])
@@ -36,31 +36,33 @@ def begin():
     dealerStart()
     playerStart()
 
-def copy(hand, evalHand):
+def copy(hand):
     evalHand = hand
-    print(evalHand)
+    print(evalHand, "copied hand")
+    return evalHand
 
 
 def convert(evalHand):
-    [s.strip("♥") for s in evalHand]
-    [s.strip("♦") for s in evalHand]
-    [s.strip("♣") for s in evalHand]
-    [s.strip("♠") for s in evalHand]
-    [s.replace('A', '11') for s in evalHand]
-    [s.replace('J', '10') for s in evalHand]
-    [s.replace('Q', '10') for s in evalHand]
-    [s.replace('K', '10') for s in evalHand]
+    evalHand = [s.strip("♥♦♣♠") for s in evalHand]
+    print(evalHand)
+    evalHand = [s.replace('A', '11') for s in evalHand]
+    evalHand = [s.replace('J', '10') for s in evalHand]
+    evalHand = [s.replace('Q', '10') for s in evalHand]
+    evalHand = [s.replace('K', '10') for s in evalHand]
     evalHand = list(map(int, evalHand))
     print(evalHand)
+    return evalHand
 
-def hit(hand, evalHand):
+def hit(hand):
     deal(hand)
-    copy(hand, evalHand)
-    convert(evalHand)
+    evalHand = copy(hand)
+    evalHand = convert(evalHand)
+    return evalHand
 
 def dealerLogic(hand, evalHand):
     while sum(evalHand) < 15:
-        hit(hand, evalHand)
+        evalHand = hit(hand)
+    return hand
 
 def playerLogic(hand, evalHand):
     flag = True
@@ -70,15 +72,16 @@ def playerLogic(hand, evalHand):
         elif sum(evalHand) >= 13 & evalDealerHand[0] < 7:
             flag = False
         elif sum(evalHand) >= 13 & evalDealerHand[0] >= 7:
-            hit(hand, evalHand)
+            evalHand = hit(hand)
         elif sum(evalHand) == 12 & evalDealerHand[0] < 4:
-            hit(hand, evalHand)
+            evalHand = hit(hand)
         elif sum(evalHand) == 12 & evalDealerHand[0] < 7:
             flag = False
         elif sum(evalHand) == 12:
-            hit(hand, evalHand)
+            evalHand = hit(hand)
         else:
-            hit(hand, evalHand)
+            evalHand = hit(hand)
+    return hand
 
 deck = []
 
@@ -104,14 +107,20 @@ print(dealerHand)
 
 print(playerHand)
 
-copy(playerHand, evalPlayerHand)
+evalPlayerHand = copy(playerHand)
 
-convert(evalPlayerHand)
+print(evalPlayerHand, "eval after copy")
 
-copy(dealerHand, evalDealerHand)
+evalPlayerHand = convert(evalPlayerHand)
 
-convert(evalDealerHand)
+evalDealerHand = copy(dealerHand)
 
-playerLogic(playerHand, evalPlayerHand)
+evalDealerHand = convert(evalDealerHand)
 
-dealerLogic(dealerHand, evalDealerHand)
+print(evalDealerHand, evalPlayerHand)
+
+playerHand = playerLogic(playerHand, evalPlayerHand)
+
+dealerHand = dealerLogic(dealerHand, evalDealerHand)
+
+print(playerHand,"final player hand", dealerHand, "final dealer hand")
