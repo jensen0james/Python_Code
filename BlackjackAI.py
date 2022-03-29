@@ -67,13 +67,13 @@ def playerLogic(hand, evalHand):
     while flag:
         if sum(evalHand) >= 17:
             flag = False
-        elif sum(evalHand) >= 13 & evalDealerHand[1] < 7:
+        elif sum(evalHand) >= 13 and evalDealerHand[1] < 7:
             flag = False
-        elif sum(evalHand) >= 13 & evalDealerHand[1] >= 7:
+        elif sum(evalHand) >= 13 and evalDealerHand[1] >= 7:
             evalHand = hit(hand)
-        elif sum(evalHand) == 12 & evalDealerHand[1] < 4:
+        elif sum(evalHand) == 12 and evalDealerHand[1] < 4:
             evalHand = hit(hand)
-        elif sum(evalHand) == 12 & evalDealerHand[1] < 7:
+        elif sum(evalHand) == 12 and evalDealerHand[1] < 7:
             flag = False
         elif sum(evalHand) == 12:
             evalHand = hit(hand)
@@ -83,11 +83,14 @@ def playerLogic(hand, evalHand):
     return hand, evalHand
 
 def winner(player, dealer):
-    dealerWin, playerWin, tie
-    if sum(dealer) == 21 & len(dealer) == 2:
+    global dealerWin
+    global playerWin
+    global tie
+
+    if sum(dealer) == 21 and len(dealer) == 2:
         print("Blackjack! Dealer wins!")
         dealerWin += 1
-    elif sum(player) == 21 & len(player) == 2:
+    elif sum(player) == 21 and len(player) == 2:
         print("Blackjack! Player wins!")
         playerWin += 1
     elif sum(player) > 21:
@@ -102,11 +105,9 @@ def winner(player, dealer):
     elif sum(player) > sum(dealer):
         print("Player wins")
         playerWin += 1
-    else:
+    elif sum(player) < sum(dealer):
         print("Dealer wins")
         dealerWin +=1
-    
-    return dealerWin, playerWin, tie
 
 def playGame():
     deck, playerHand, dealerHand, evalPlayerHand, evalDealerHand = []
@@ -121,9 +122,13 @@ def playGame():
     playerHand = playerLogic(playerHand, evalPlayerHand)
     dealerHand = dealerLogic(dealerHand, evalDealerHand)
 
-flag = True
+dealerWin = 0
+playerWin = 0
+tie = 0
 
-while flag:
+times = int(input("How many games would you like the AI to play? "))
+for i in range (times):
+
     deck = []
     playerHand = []
     evalPlayerHand = []
@@ -151,23 +156,10 @@ while flag:
     print(sum(playerTuple[1]), "value of final player hand", sum(dealerTuple[1]), "value of final dealer hand")
 
     winner(playerTuple[1], dealerTuple[1])
-
     
-
-    #if sumplayerTuple[1] == 21
-
-    test =  0 #input("Press zero to quit: ")
-
-    if test == 0:
-        flag = False
-    else:
-        flag = True
-    
-winnerTuple = winner()
-print(sum(winnerTuple), " games were played.")
+print(dealerWin + playerWin + tie, " games were played.")
 print("Of those...")
-print(winnerTuple[0], " times the dealer won.")
-print(winnerTuple[1], " times the AI won.")
-print(winnerTuple[2], " the game ended in a push.")
-print("The AI won ", winnerTuple[1]/sum(winnerTuple), '%', " of the time.")
-#playGame()
+print(dealerWin, " times the dealer won.")
+print(playerWin, " times the AI won.")
+print(tie, " the game ended in a push.")
+print("The AI won ", playerWin/(dealerWin + playerWin + tie) * 100, '%', " of the time.")
