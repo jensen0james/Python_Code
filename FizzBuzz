@@ -1,0 +1,13 @@
+steps = int(input('How many games of FizzBuzz would you like to play?: '))
+steps += 1
+fizz = 3
+buzz = 5
+for i in range(1, steps):
+    if (int(i) % (fizz*buzz) == 0 ):
+        print('FizzBuzz')
+    elif (int(i) % fizz == 0):
+        print('Fizz')
+    elif (int(i) % buzz == 0):
+        print('Buzz')
+    else:
+        print(i)
